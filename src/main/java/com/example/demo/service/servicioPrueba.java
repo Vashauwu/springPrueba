@@ -22,8 +22,6 @@ public class servicioPrueba {
     public String holaService(String nombre, String pass) {
         if (nombre.equals("Kevin") && pass.equals("1234")) {
             
-            
-            
             return "correcto";
         } else {
             

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -28,7 +29,7 @@ public class RequestParamController {
     }
     private static final String TEMPLATE_VIEW = "servicio";
     private static final String TEMPLATE_VIEW1 = "correcto";
-    private static final String TEMPLATE_VIEW2 = "incorercto";
+    private static final String TEMPLATE_VIEW2 = "incorrecto";
 
     @GetMapping("/servicioPrueba2")
     public ModelAndView getRequest(@RequestParam(name = "name") String nombreReq,
@@ -36,20 +37,24 @@ public class RequestParamController {
             @RequestParam(name = "email") String email) {
         if (prueba.holaService(nombreReq, pass).equals("correcto")) {
             ModelAndView mav = new ModelAndView(TEMPLATE_VIEW1);
-            mav.addObject("dato_nombre", nombreReq);
-            mav.addObject("dato_pass", pass);
-            mav.addObject("dato_email", email);
+
             return mav;
         } else {
 
-            ModelAndView mav = new ModelAndView(TEMPLATE_VIEW2);
-            mav.addObject("dato_nombre", nombreReq);
-            mav.addObject("dato_pass", pass);
-            mav.addObject("dato_email", email);
-            mav.addObject("dato_mensaje", prueba.holaService(nombreReq, pass));
+            ModelAndView mav = new ModelAndView("redirect:./servicioPruebaError");
+
             return mav;
 
         }
+    }
+
+    @GetMapping("/servicioPruebaError")
+    public ModelAndView getRequest1() {
+
+        ModelAndView mav = new ModelAndView(TEMPLATE_VIEW2);
+
+        return mav;
+
     }
 
 }
